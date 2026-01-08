@@ -1,0 +1,599 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-x: hidden;
+}
+
+
+/* ANA WRAPPER */
+.game-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    min-height: 100vh;
+    background-image: url(ring.jpg);
+    background-position: center;
+    background-size: cover;
+    padding: 20px;
+}
+
+
+/* ÜST BÖLÜM */
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* BUTONLAR */
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    width: 100px;
+    height: 100px;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #f0f0f0, #ffffff);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1),
+                -5px -5px 15px rgba(255, 255, 255, 0.7);
+}
+
+.action-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.15),
+                -8px -8px 20px rgba(255, 255, 255, 0.8);
+}
+
+.action-btn.active {
+    transform: scale(0.95);
+    background: linear-gradient(145deg, #000000, #764ba2);
+    color: white;
+}
+
+.action-btn img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 8px;
+}
+
+.action-btn span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ff4757;
+}
+
+.action-btn.active span {
+    color: white;
+}
+
+/* CAN GÖSTERGESİ */
+.health-display {
+    background: linear-gradient(135deg, #ff00f2, hsla(192, 50%, 41%, 0.24));
+    padding: 20px 30px;
+    border-radius: 20px;
+    color: white;
+    min-width: 10vh;
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+}
+
+.character-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.hearts {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.heart {
+    width: 35px;
+    height: 35px;
+    transition: all 0.3s ease;
+}
+
+.health-text {
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* KARAKTER ALANI - ALT KISMA YAPIŞTIR */
+.character-area {
+    position: fixed; /* EKRANA SABİTLE */
+    bottom: 50px; /* ALTTA 50px YUKARIDA */
+    left: 0;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* ALT KISMA HİZALA */
+    z-index: 10;
+    pointer-events: none; /* Tıklamaları engelleme */
+}
+
+.character-img {
+    width: 350px; /* BÜYÜK BOYUT */
+    height: 500px; /* BÜYÜK BOYUT */
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    pointer-events: auto; /* Sadece karakter tıklanabilsin */
+    position: relative;
+    bottom: 0; /* TAM ALT */
+}
+
+/* Mobilde biraz daha küçük */
+@media (max-width: 768px) {
+    .character-area {
+        bottom: 30px; /* Mobilde biraz daha yukarı */
+    }
+    
+    .character-img {
+        width: 280px;
+        height: 420px;
+    }
+}
+
+@media (max-width: 480px) {
+    .character-img {
+        width: 220px;
+        height: 350px;
+    }
+}
+
+/* EKRAN ÇOK BÜYÜKSE */
+@media (min-width: 1400px) {
+    .character-img {
+        width: 400px;
+        height: 550px;
+    }
+}
+/* OYNAYAN KARAKTER ANİMASYONU */
+@keyframes characterAppear {
+    0% {
+        transform: scale(0.8) translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.character-img {
+    animation: characterAppear 0.8s ease-out forwards;
+}
+
+/* Hasar animasyonu için ek */
+@keyframes hitEffect {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.hit-effect {
+    animation: hitEffect 0.2s ease;
+}
+.click-hint {
+    position: absolute;
+    bottom: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+    color: #667eea;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* ALT BÖLÜM */
+.bottom-section {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.audio-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 15px 25px;
+    border-radius: 50px;
+}
+
+#mute-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #dddddd;
+    transition: transform 0.3s;
+}
+
+#mute-btn:hover {
+    transform: scale(1.1);
+}
+
+#volume {
+    width: 150px;
+    height: 8px;
+    -webkit-appearance: none;
+    background: linear-gradient(to right, #667eea, #764ba2);
+    border-radius: 4px;
+    outline: none;
+}
+
+#volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 25px;
+    height: 25px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+/* HASAR POPUP */
+#damage-popup {
+    position: absolute;
+    pointer-events: none;
+    font-size: 32px;
+    font-weight: bold;
+    z-index: 100;
+    opacity: 0;
+    transition: all 0.5s ease;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* OYUN BİTTİ MODALI */
+#game-over {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.message-box {
+    position: relative;
+    background: white;
+    max-width: 500px;
+    margin: 100px auto;
+    padding: 40px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.message-box h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-size: 32px;
+}
+
+.message-box p {
+    margin-bottom: 25px;
+    font-size: 18px;
+    color: #666;
+}
+
+.message-box textarea {
+    width: 100%;
+    height: 120px;
+    padding: 20px;
+    border: 3px solid #667eea;
+    border-radius: 15px;
+    font-size: 16px;
+    resize: none;
+    margin-bottom: 25px;
+    font-family: inherit;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.buttons button {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#send-message {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+#play-again {
+    background: linear-gradient(135deg, #df0007, #fad0c4);
+    color: white;
+}
+
+.buttons button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+#final-message {
+    margin-top: 25px;
+    padding: 20px;
+    background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+    border-radius: 15px;
+    font-size: 20px;
+    color: #333;
+    display: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .game-wrapper {
+        padding: 15px;
+    }
+    
+    .top-section {
+        flex-direction: column;
+    }
+    
+    .action-buttons {
+        justify-content: center;
+    }
+    
+    .action-btn {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .action-btn img {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .character-area {
+        height: 350px;
+    }
+    
+    .character-img {
+        width: 250px;
+        height: 350px;
+    }
+    
+    .health-display {
+        min-width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .action-btn {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .action-btn img {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .character-area {
+        height: 300px;
+    }
+    
+    .character-img {
+        width: 200px;
+        height: 300px;
+    }
+    
+    .message-box {
+        margin: 50px 20px;
+        padding: 25px;
+    }
+    
+    .buttons {
+        flex-direction: column;
+    }
+}
+
+/* ANIMASYONLAR */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes flash {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
+}
+
+.shake {
+    animation: shake 0.5s ease;
+}
+
+.flash {
+    animation: flash 0.5s ease;
+}
+@media (max-width: 768px) {
+    body {
+        align-items: flex-start;
+    }
+
+    .game-wrapper {
+        min-height: 100dvh;
+        padding-bottom: 20px;
+    }
+
+    .character-area {
+        min-height: 320px;
+        max-height: 60vh;
+    }
+}
+.character-wrapper {
+    position: relative;
+}
+
+.cry-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.cry-img {
+    animation: shake 0.5s infinite;
+}
+/* EKRAN BOYUTUNA GÖRE OTOMATİK AYAR */
+@media (min-height: 800px) {
+    .character-area {
+        min-height: 70vh;
+    }
+    .character-img {
+        width: 450px;
+        height: 600px;
+    }
+}
+
+@media (max-height: 700px) {
+    .character-area {
+        min-height: 60vh;
+    }
+    .character-img {
+        width: 350px;
+        height: 500px;
+    }
+}
+
+/* PORTRE MODU (DİKEY) */
+@media (orientation: portrait) {
+    .character-area {
+        min-height: 50vh;
+        align-items: flex-start; /* ÜSTTEN BAŞLA */
+        padding-top: 20px;
+    }
+    
+    .character-img {
+        width: 280px;
+        height: 420px;
+    }
+}
+
+/* LANDSCAPE MODU (YATAY) */
+@media (orientation: landscape) and (max-height: 600px) {
+    .character-area {
+        min-height: 80vh;
+    }
+    
+    .character-img {
+        width: 300px;
+        height: 450px;
+    }
+}
+/* ... diğer CSS kodları aynı ... */
+
+/* KARAKTER ALANI */
+.character-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 400px;
+    padding-bottom: 20px;
+    position: relative; /* Pozisyon ekledik */
+}
+
+/* Normal karakter */
+.character-img {
+    width: 350px;
+    height: 500px;
+    object-fit: contain;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    max-width: 90%;
+    position: relative;
+    z-index: 1;
+}
+
+/* Ağlama karakteri (gizli) */
+.character-cry {
+    width: 350vh;
+    height: 330px;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0; /* Başlangıçta görünmez */
+    pointer-events: none;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+    max-width: 1000%;
+}
+
+/* Ağlama efekti aktifken */
+.character-cry.active {
+    opacity: 1; /* Görünür olacak */
+}
+
+.character-img.inactive {
+    opacity: 0; /* Görünmez olacak */
+}

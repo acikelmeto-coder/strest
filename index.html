@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEA</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-wrapper">
+        <!-- ÜST: Butonlar ve Can -->
+        <div class="top-section">
+            <div class="action-buttons">
+                <button class="action-btn" data-action="punch" data-damage="10">
+                    <img src="punch.png" alt="Yumruk">
+                    <span>-10</span>
+                </button>
+                <button class="action-btn" data-action="slap" data-damage="15">
+                    <img src="slap.png" alt="Tokat">
+                    <span>-15</span>
+                </button>
+                <button class="action-btn" data-action="bag" data-damage="5">
+                    <img src="bag.png" alt="Çanta">
+                    <span>-5</span>
+                </button>
+                <button class="action-btn" data-action="kiss" data-damage="-15">
+                    <img src="kiss.png" alt="Öpücük">
+                    <span>+15</span>
+                </button>
+            </div>
+            
+            <div class="health-display">
+                <div class="character-name">METE</div>
+                <div class="hearts"></div>
+                <div class="health-text">CAN: <span id="health">100</span></div>
+            </div>
+        </div>
+        
+        
+<!-- ALT: Karakter -->
+<div class="character-area">
+    <!-- Normal karakter -->
+    <img src="mete.png" alt="Karakter" class="character-img" id="character">
+    
+    <!-- Ağlama karakteri (gizli) -->
+    <img src="cry.png" alt="Ağlayan Karakter" class="character-cry" id="character-cry">
+</div>
+        
+        <!-- Hasar Göstergesi -->
+        <div id="damage-popup"></div>
+        
+        <!-- Oyun Bitti -->
+        <div id="game-over">
+            <div class="overlay"></div>
+            <div class="message-box">
+                <h2>🎉 Oyun Bitti! 🎉</h2>
+                <p>Sevgiline özel bir mesaj yaz:</p>
+                <textarea placeholder="Örnek: Seni seviyorum canım! ❤️"></textarea>
+                <div class="buttons">
+                    <button id="send-message">Mesajı Gönder</button>
+                    <button id="play-again">Tekrar Oyna</button>
+                </div>
+                <div id="final-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
